@@ -20,7 +20,7 @@ struct LoginView: View {
                             .font(.largeTitle)
                             .bold()
                         
-                        Text("Welcome to Bubble")
+                        Text("Welcome to Bubble!")
                             .font(.title)
                             .bold()
                             .foregroundColor(.blue)
@@ -46,7 +46,7 @@ struct LoginView: View {
                             .foregroundColor(.blue)
                     }
                 }
-                .padding()
+                .padding(.horizontal)
                 
                 Button {
                     print("Sign in")
@@ -64,7 +64,8 @@ struct LoginView: View {
                 Spacer()
                 
                 NavigationLink {
-                    Text("Register")
+                    RegistrationView()
+                        .navigationBarBackButtonHidden()
                 } label: {
                     HStack(spacing: 5) {
                         Spacer()
@@ -86,7 +87,7 @@ struct LoginView: View {
 }
 
 
-struct RegistrationView_Previews: PreviewProvider {
+struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
     }

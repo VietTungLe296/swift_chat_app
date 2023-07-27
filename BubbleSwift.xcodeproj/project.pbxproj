@@ -12,6 +12,7 @@
 		6CA0F4042A7151F9002D6EFB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CA0F4032A7151F9002D6EFB /* Preview Assets.xcassets */; };
 		6CA0F4112A71538B002D6EFB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA0F4102A71538B002D6EFB /* LoginView.swift */; };
 		6CA0F4142A716473002D6EFB /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA0F4132A716473002D6EFB /* CustomTextField.swift */; };
+		6CA0F4162A721E5C002D6EFB /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA0F4152A721E5C002D6EFB /* RegistrationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		6CA0F4032A7151F9002D6EFB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6CA0F4102A71538B002D6EFB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6CA0F4132A716473002D6EFB /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		6CA0F4152A721E5C002D6EFB /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +92,7 @@
 		6CA0F40C2A7152EC002D6EFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6CA0F4122A716457002D6EFB /* Utils */,
+				6CA0F4122A716457002D6EFB /* Common */,
 				6CA0F40F2A715375002D6EFB /* Authentication */,
 			);
 			path = Views;
@@ -114,16 +116,17 @@
 			isa = PBXGroup;
 			children = (
 				6CA0F4102A71538B002D6EFB /* LoginView.swift */,
+				6CA0F4152A721E5C002D6EFB /* RegistrationView.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
 		};
-		6CA0F4122A716457002D6EFB /* Utils */ = {
+		6CA0F4122A716457002D6EFB /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				6CA0F4132A716473002D6EFB /* CustomTextField.swift */,
 			);
-			path = Utils;
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +202,7 @@
 				6CA0F4112A71538B002D6EFB /* LoginView.swift in Sources */,
 				6CA0F3FD2A7151F7002D6EFB /* BubbleSwiftApp.swift in Sources */,
 				6CA0F4142A716473002D6EFB /* CustomTextField.swift in Sources */,
+				6CA0F4162A721E5C002D6EFB /* RegistrationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

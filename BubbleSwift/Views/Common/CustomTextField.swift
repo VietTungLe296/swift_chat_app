@@ -32,6 +32,7 @@ struct CustomTextField: View {
             
             Divider().background(.gray)
         }
+        .padding(.bottom)
     }
 }
 
