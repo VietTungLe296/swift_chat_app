@@ -8,17 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		6CA0F3FD2A7151F7002D6EFB /* BubbleSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA0F3FC2A7151F7002D6EFB /* BubbleSwiftApp.swift */; };
-		6CA0F3FF2A7151F7002D6EFB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA0F3FE2A7151F7002D6EFB /* ContentView.swift */; };
 		6CA0F4012A7151F9002D6EFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CA0F4002A7151F9002D6EFB /* Assets.xcassets */; };
 		6CA0F4042A7151F9002D6EFB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CA0F4032A7151F9002D6EFB /* Preview Assets.xcassets */; };
+		6CA0F4112A71538B002D6EFB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA0F4102A71538B002D6EFB /* LoginView.swift */; };
+		6CA0F4142A716473002D6EFB /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA0F4132A716473002D6EFB /* CustomTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6CA0F3F92A7151F7002D6EFB /* BubbleSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BubbleSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CA0F3FC2A7151F7002D6EFB /* BubbleSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleSwiftApp.swift; sourceTree = "<group>"; };
-		6CA0F3FE2A7151F7002D6EFB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6CA0F4002A7151F9002D6EFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6CA0F4032A7151F9002D6EFB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		6CA0F4102A71538B002D6EFB /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		6CA0F4132A716473002D6EFB /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,10 +53,14 @@
 		6CA0F3FB2A7151F7002D6EFB /* BubbleSwift */ = {
 			isa = PBXGroup;
 			children = (
-				6CA0F3FC2A7151F7002D6EFB /* BubbleSwiftApp.swift */,
-				6CA0F3FE2A7151F7002D6EFB /* ContentView.swift */,
-				6CA0F4002A7151F9002D6EFB /* Assets.xcassets */,
+				6CA0F40A2A7152D8002D6EFB /* Models */,
+				6CA0F40B2A7152E9002D6EFB /* ViewModels */,
+				6CA0F40D2A715314002D6EFB /* Services */,
+				6CA0F40C2A7152EC002D6EFB /* Views */,
 				6CA0F4022A7151F9002D6EFB /* Preview Content */,
+				6CA0F40E2A71531B002D6EFB /* Utils */,
+				6CA0F3FC2A7151F7002D6EFB /* BubbleSwiftApp.swift */,
+				6CA0F4002A7151F9002D6EFB /* Assets.xcassets */,
 			);
 			path = BubbleSwift;
 			sourceTree = "<group>";
@@ -65,6 +71,59 @@
 				6CA0F4032A7151F9002D6EFB /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6CA0F40A2A7152D8002D6EFB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6CA0F40B2A7152E9002D6EFB /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		6CA0F40C2A7152EC002D6EFB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6CA0F4122A716457002D6EFB /* Utils */,
+				6CA0F40F2A715375002D6EFB /* Authentication */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6CA0F40D2A715314002D6EFB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		6CA0F40E2A71531B002D6EFB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		6CA0F40F2A715375002D6EFB /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				6CA0F4102A71538B002D6EFB /* LoginView.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		6CA0F4122A716457002D6EFB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				6CA0F4132A716473002D6EFB /* CustomTextField.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +196,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6CA0F3FF2A7151F7002D6EFB /* ContentView.swift in Sources */,
+				6CA0F4112A71538B002D6EFB /* LoginView.swift in Sources */,
 				6CA0F3FD2A7151F7002D6EFB /* BubbleSwiftApp.swift in Sources */,
+				6CA0F4142A716473002D6EFB /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
