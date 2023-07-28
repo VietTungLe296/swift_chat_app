@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RegistrationView: View {
+    
     @State private var email = ""
     @State private var username = ""
     @State private var fullName = ""
