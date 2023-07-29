@@ -10,17 +10,9 @@ import SwiftUI
 struct NewMessageView: View {
     @Binding var showChatView: Bool
     
-    @Environment(\.dismiss) var dismiss
-    
     @State var searchText = ""
     
-    //    var searchResults: [String] {
-    //        if searchText.isEmpty {
-    //            return names
-    //        } else {
-    //            return names.filter { $0.contains(query) }
-    //        }
-    //    }
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationStack {

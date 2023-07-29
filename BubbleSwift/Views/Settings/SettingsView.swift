@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @State private var showAlert = false
+    
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
     var body: some View {
         ZStack {
             Color(.systemGroupedBackground)
@@ -28,13 +32,22 @@ struct SettingsView: View {
                     }
                     
                     Button {
-                        
+                        showAlert = true
                     } label: {
                         Text("Log Out")
                             .foregroundColor(.red)
                             .font(.system(size: 18))
                             .frame(width: geometry.size.width, height: 50)
                             .background(.white)
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: Text("Confirmation"),
+                              message: Text("Are you sure you want to log out?"),
+                              primaryButton: .destructive(Text("Log Out")) {
+                            authViewModel.signOut()
+                        },
+                              secondaryButton: .cancel()
+                        )
                     }
                     
                     Spacer()

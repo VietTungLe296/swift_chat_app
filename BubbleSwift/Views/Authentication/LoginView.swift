@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct LoginView: View {
-    
     @State private var email = ""
     @State private var password = ""
+    @State var showStatus = false
+    @State var allowsInteraction = true
+    
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         NavigationStack {
@@ -34,6 +37,8 @@ struct LoginView: View {
                     CustomTextField(imageName: "envelope", placeholder: "Email", isSecureField: false, text: $email)
                     CustomTextField(imageName: "lock", placeholder: "Password", isSecureField: true, text: $password)
                 }
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(.never)
                 .padding([.top, .horizontal], 32)
                 
                 HStack {
@@ -50,13 +55,14 @@ struct LoginView: View {
                 .padding(.horizontal)
                 
                 Button {
-                    print("Sign in")
+                    showStatus = true
+                    viewModel.login(email: email, password: password)
                 } label: {
                     Text("Sign In")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(width: 340, height: 50)
-                        .background(.blue)
+                        .background(showStatus ? .white : .blue)
                         .clipShape(Capsule())
                         .padding(.horizontal)
                 }
@@ -83,6 +89,34 @@ struct LoginView: View {
                 }
             }
             .padding()
+            .allowsHitTesting(allowsInteraction)
+            .blur(radius: showStatus ? 8 : 0)
+            .overlay {
+                if showStatus {
+                    if case .loading = viewModel.status {
+                        ProgressView()
+                            .onAppear {
+                                allowsInteraction = false
+                            }
+                            .onDisappear {
+                                allowsInteraction = true
+                            }
+                    } else if case .error(let message) = viewModel.status {
+                        Text(message)
+                            .foregroundColor(.red)
+                            .padding()
+                            .onAppear {
+                                allowsInteraction = false
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    showStatus = false
+                                    viewModel.status = .loading
+                                    allowsInteraction = true
+                                }
+                            }
+                    }
+                }
+            }
+            .navigationBarBackButtonHidden()
         }
     }
 }
@@ -91,5 +125,6 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
+            .environmentObject(AuthViewModel())
     }
 }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    
     @State private var selectedIndex = 0
     
     private var tabTitle: String {

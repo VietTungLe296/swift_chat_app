@@ -9,9 +9,12 @@ import SwiftUI
 import PhotosUI
 
 struct EditProfileView: View {
-    @State var name: String = ""
-    @State private var avatarItem: PhotosPickerItem?
-    @State private var avatarImage: Image?
+    @State var username: String = ""
+    @State var showStatusEdit = false
+    
+    @ObservedObject var imagePicker = ImagePicker()
+    
+    @EnvironmentObject var viewModel : AuthViewModel
     
     var body: some View {
         ZStack {
@@ -22,8 +25,8 @@ struct EditProfileView: View {
                 VStack {
                     HStack {
                         VStack {
-                            if let avatarImage {
-                                avatarImage
+                            if let avatarImage = imagePicker.image {
+                                Image(uiImage: avatarImage)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 64, height: 64)
@@ -37,19 +40,7 @@ struct EditProfileView: View {
                                     .clipShape(Circle())
                             }
                             
-                            PhotosPicker("Edit", selection: $avatarItem, matching: .images)
-                        }
-                        .onChange(of: avatarItem) { _ in
-                            Task {
-                                if let data = try? await avatarItem?.loadTransferable(type: Data.self) {
-                                    if let uiImage = UIImage(data: data) {
-                                        avatarImage = Image(uiImage: uiImage)
-                                        return
-                                    }
-                                }
-                                
-                                print("Failed")
-                            }
+                            PhotosPicker("Edit", selection: $imagePicker.imageSelection, matching: .images)
                         }
                         
                         Spacer()
@@ -66,7 +57,7 @@ struct EditProfileView: View {
                     Divider()
                         .padding(.horizontal)
                     
-                    TextField("Name", text: $name)
+                    TextField("Name", text: $username)
                         .padding(10)
                 }
                 .background(.white)
@@ -77,19 +68,19 @@ struct EditProfileView: View {
                         .padding()
                         .foregroundColor(.gray)
                     
-                    NavigationLink {
-                        StatusEditView()
-                    } label: {
-                        HStack {
-                            Text(UserStatus.available.rawValue)
-                            
-                            Spacer()
-                            
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.gray)
-                        }
-                        .padding()
-                        .background(.white)
+                    HStack {
+                        Text(UserStatus.available.rawValue)
+                            .foregroundColor(.cyan)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.gray)
+                    }
+                    .padding()
+                    .background(.white)
+                    .onTapGesture {
+                        showStatusEdit = true
                     }
                 }
                 
@@ -98,13 +89,25 @@ struct EditProfileView: View {
         }
         .navigationTitle("Edit Profile")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Save") {
+                    if let avatarImage = imagePicker.image {
+                        viewModel.uploadProfileImage(avatarImage)
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $showStatusEdit) {
+            StatusEditView()
+        }
     }
 }
 
 struct EditProfileView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            EditProfileView(name: "Viet Tung Le")
+            EditProfileView(username: "Viet Tung Le")
         }
     }
 }

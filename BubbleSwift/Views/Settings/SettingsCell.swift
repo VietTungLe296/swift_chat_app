@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SettingsCell: View {
-    
     let option: SettingsOption
     
     var body: some View {

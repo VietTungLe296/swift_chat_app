@@ -30,7 +30,7 @@ struct CustomTextField: View {
                 }
             }
             
-            Divider().background(.gray)
+            Divider().foregroundColor(.gray)
         }
         .padding(.bottom)
     }

@@ -10,6 +10,8 @@ import SwiftUI
 struct StatusEditView: View {
     @ObservedObject var viewModel = StatusViewModel()
     
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         ZStack {
             Color(.systemGroupedBackground)
@@ -17,6 +19,18 @@ struct StatusEditView: View {
             ScrollView {
                 VStack(spacing: 48) {
                     VStack(alignment: .leading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Image(systemName: "xmark")
+                                    .foregroundColor(.black)
+                                    .font(.headline)
+                                    .padding([.top, .horizontal])
+                            }
+                        }
+                        
                         Text("CURRENTLY SET TO")
                             .foregroundColor(.gray)
                             .padding()

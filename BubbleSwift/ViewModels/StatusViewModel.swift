@@ -7,16 +7,6 @@
 
 import Foundation
 
-final class StatusViewModel: ObservableObject {
-    
-    @Published var status: UserStatus = .notConfigured
-    
-    func updateStatus(_ status: UserStatus) {
-        self.status = status
-    }
-}
-
-
 enum UserStatus: String, CaseIterable {
     case notConfigured = "Click here to update"
     case available = "Available"
@@ -29,3 +19,14 @@ enum UserStatus: String, CaseIterable {
     case sleeping = "Sleeping"
     case urgentCallsOnly = "Urgent calls only"
 }
+
+final class StatusViewModel: ObservableObject {
+    @Published var status: UserStatus = .notConfigured
+    
+    func updateStatus(_ status: UserStatus) {
+        self.status = status
+    }
+}
+
+
+

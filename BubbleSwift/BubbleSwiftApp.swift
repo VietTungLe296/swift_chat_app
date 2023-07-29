@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct BubbleSwiftApp: App {
+    init() {
+        FirebaseApp.configure()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            EntryView()
+                .environmentObject(AuthViewModel())
         }
     }
 }

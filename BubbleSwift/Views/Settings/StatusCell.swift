@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct StatusCell: View {
-    
     var status: UserStatus
     var isSelected: Bool
     
