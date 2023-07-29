@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StatusEditView: View {
-    @StateObject var viewModel = StatusViewModel()
+    @ObservedObject var viewModel = StatusViewModel()
     
     var body: some View {
         ZStack {

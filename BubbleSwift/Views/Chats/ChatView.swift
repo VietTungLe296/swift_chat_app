@@ -8,8 +8,30 @@
 import SwiftUI
 
 struct ChatView: View {
+    @State private var inputMessage = ""
+    
+    @ObservedObject var viewModel = ChatViewModel()
+    
     var body: some View {
-        Text("Chat")
+        VStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 12) {
+                    ForEach(viewModel.messages) { message in
+                        MessageView(isFromCurrentUser: message.isFromCurrentUser, messageText: message.messageText)
+                    }
+                }
+            }
+            
+            CustomInputField(text: $inputMessage, action: sendMessage)
+        }
+        .padding(.vertical)
+        .navigationTitle("VTS")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private func sendMessage() {
+        viewModel.sendMessage(inputMessage)
+        inputMessage = ""
     }
 }
 

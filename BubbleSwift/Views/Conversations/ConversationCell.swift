@@ -24,6 +24,7 @@ struct ConversationCell: View {
                     Text("Temporary message for now...")
                         .font(.system(size: 15))
                 }
+                .foregroundColor(.black)
                 
                 Spacer()
             }
