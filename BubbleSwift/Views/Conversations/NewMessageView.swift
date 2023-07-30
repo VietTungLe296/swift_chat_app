@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NewMessageView: View {
+    @Binding var user: User?
     @Binding var showChatView: Bool
     
     @State var searchText = ""
@@ -15,12 +16,13 @@ struct NewMessageView: View {
     @Environment(\.dismiss) var dismiss
     
     @ObservedObject var userViewModel: UserViewModel = UserViewModel()
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     var filteredUsers: [User] {
         if searchText.isEmpty {
             return userViewModel.users
         } else {
-            return userViewModel.users.filter { $0.username.lowercased().contains(searchText.lowercased()) || $0.fullName.lowercased().contains(searchText.lowercased())}
+            return userViewModel.users.filter { $0.username.lowercased().contains(searchText.lowercased()) || $0.fullName.lowercased().contains(searchText.lowercased())} 
         }
     }
     
@@ -31,6 +33,7 @@ struct NewMessageView: View {
                     ForEach(filteredUsers) { user in
                         Button {
                             showChatView = true
+                            self.user = user
                             dismiss()
                         } label: {
                             UserCell(user: user)
@@ -55,6 +58,7 @@ struct NewMessageView: View {
 
 struct NewMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        NewMessageView(showChatView: .constant(true))
+        NewMessageView(user: .constant(User.mockUser), showChatView: .constant(true))
+            .environmentObject(AuthViewModel())
     }
 }

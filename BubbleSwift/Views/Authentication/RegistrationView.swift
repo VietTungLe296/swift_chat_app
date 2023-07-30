@@ -12,12 +12,12 @@ struct RegistrationView: View {
     @State private var username = ""
     @State private var fullName = ""
     @State private var password = ""
-    @State var showStatus = false
-    @State var allowsInteraction = true
-    @State var forwardLogin = false
+    @State private var showStatus = false
+    @State private var allowsInteraction = true
+    @State private var forwardLogin = false
     
     @EnvironmentObject var viewModel: AuthViewModel
-
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
@@ -38,19 +38,18 @@ struct RegistrationView: View {
                 
                 VStack(spacing: 30) {
                     CustomTextField(imageName: "envelope", placeholder: "Email", isSecureField: false, text: $email)
-                        .textInputAutocapitalization(.never)
                     CustomTextField(imageName: "person.crop.circle", placeholder: "Username", isSecureField: false, text: $username)
-                        .textInputAutocapitalization(.never)
                     CustomTextField(imageName: "person", placeholder: "Full Name", isSecureField: false, text: $fullName)
-                        .textInputAutocapitalization(.characters)
                     CustomTextField(imageName: "lock", placeholder: "Password", isSecureField: true, text: $password)
                 }
-                .autocorrectionDisabled()
                 .padding(32)
                 
                 Button {
                     showStatus = true
-                    viewModel.register(email: email, username: username, fullName: fullName, password: password)
+                    
+                    Task {
+                        await viewModel.register(email: email, username: username, fullName: fullName, password: password)
+                    }
                 } label: {
                     Text("Sign Up")
                         .font(.headline)
@@ -110,9 +109,11 @@ struct RegistrationView: View {
                                 allowsInteraction = false
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                     showStatus = false
-                                    viewModel.status = .loading
                                     allowsInteraction = true
                                 }
+                            }
+                            .onDisappear {
+                                viewModel.status = .loading
                             }
                     }
                 }

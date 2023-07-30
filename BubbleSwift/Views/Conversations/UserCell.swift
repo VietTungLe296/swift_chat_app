@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct UserCell: View {
-    let user: User
+    private let user: User
+    
+    init(user: User) {
+        self.user = user
+    }
     
     var body: some View {
         VStack {
@@ -56,6 +60,6 @@ struct UserCell: View {
 
 struct UserCell_Previews: PreviewProvider {
     static var previews: some View {
-        UserCell(user: User(email: "test@gmail.com", username: "VTS", fullName: "Viet Tung Le", profileImageURL: ""))
+        UserCell(user: User.mockUser)
     }
 }

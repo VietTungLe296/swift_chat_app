@@ -10,23 +10,27 @@ import FirebaseStorage
 import UIKit
 
 struct ImageUploader {
-    static func uploadImage(image: UIImage, completion: @escaping(String) -> Void) {
-        guard let data = image.jpegData(compressionQuality: 0.5) else { return}
+    static func uploadImage(image: UIImage) async throws -> String {
+        guard let data = image.jpegData(compressionQuality: 0.5) else {
+            throw NSError(domain: "ImageUploader", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to get image data"])
+        }
         
         let fileName = NSUUID().uuidString
         let storageRef = Storage.storage().reference(withPath: "/profile_images/\(fileName)")
         
-        storageRef.putData(data, metadata: nil) { _, error in
-            if let error {
-                print("Error uploading image to Firebase: \(error.localizedDescription)")
-                return
-            }
+        do {
+            let _ = try await storageRef.putDataAsync(data, metadata: nil)
             print("Image successfully uploaded to Firebase!")
             
-            storageRef.downloadURL { url, error in
-                guard let imageUrl = url?.absoluteString else { return }
-                completion(imageUrl)
-            }
+            let url = try await storageRef.downloadURL()
+            return url.absoluteString
+        } catch {
+            print("Error uploading image to Firebase: \(error.localizedDescription)")
+            throw error
         }
     }
 }
+
+
+
+

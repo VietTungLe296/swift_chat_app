@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct SettingsHeaderView: View {
-    let user: User
+    private let user: User
+    
+    init(user: User) {
+        self.user = user
+    }
     
     var body: some View {
         HStack(spacing: 10) {
@@ -18,7 +22,6 @@ struct SettingsHeaderView: View {
                     case .empty:
                         ProgressView()
                             .frame(width: 64, height: 64)
-                            .clipShape(Circle())
                             .padding(.leading)
                     case .success(let image):
                         image
@@ -29,12 +32,14 @@ struct SettingsHeaderView: View {
                             .padding(.leading)
                     case .failure(_):
                         DefaultThumbnail()
+                            .frame(width: 64, height: 64)
+                            .padding(.leading)
                     @unknown default:
                         DefaultThumbnail()
+                            .frame(width: 64, height: 64)
+                            .padding(.leading)
                     }
                 }
-            } else {
-                DefaultThumbnail()
             }
             
             VStack(alignment: .leading, spacing: 5) {
@@ -57,6 +62,6 @@ struct SettingsHeaderView: View {
 
 struct SettingsHeader_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsHeaderView(user: User(email: "ladykillah07@gmail.com", username: "VTS", fullName: "Le Viet Tung", profileImageURL: "https://media.cnn.com/api/v1/images/stellar/prod/230621042149-01-cristiano-ronaldo-euro-200-apps-062023-restricted.jpg?c=1x1"))
+        SettingsHeaderView(user: User.mockUser)
     }
 }

@@ -21,6 +21,8 @@ struct CustomInputField: View {
                     .textFieldStyle(.plain)
                     .font(.body)
                     .frame(minHeight: 30)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
                 
                 Button {
                     action()

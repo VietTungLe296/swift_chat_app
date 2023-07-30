@@ -10,6 +10,7 @@ import SwiftUI
 struct ConversationView: View {
     @State private var showNewMessage = false
     @State private var showChatView = false
+    @State var selectedUser: User?
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -17,7 +18,7 @@ struct ConversationView: View {
                 VStack(alignment: .leading) {
                     ForEach(0...10, id: \.self) { _ in
                         NavigationLink {
-                            ChatView()
+                            ChatView(user: User.mockUser)
                         } label: {
                             ConversationCell()
                         }
@@ -45,10 +46,12 @@ struct ConversationView: View {
         }
         .padding(.top)
         .sheet(isPresented: $showNewMessage) {
-            NewMessageView(showChatView: $showChatView)
+            NewMessageView(user: $selectedUser, showChatView: $showChatView)
         }
         .navigationDestination(isPresented: $showChatView) {
-            ChatView()
+            if let user = selectedUser {
+                ChatView(user: user)
+            }
         }
     }
 }

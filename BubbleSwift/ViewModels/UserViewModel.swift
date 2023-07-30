@@ -6,23 +6,30 @@
 //
 
 import Foundation
+import Firebase
 
+@MainActor
 final class UserViewModel: ObservableObject {
     @Published var users = [User]()
     
     init() {
-        fetchUsers()
+        Task {
+            await fetchUsers()
+        }
     }
     
-    private func fetchUsers() {
-        Constants.USERS_COLLECTION.getDocuments { snapshot, error in
-            if let error {
-                print("Error when fetching user: \(error.localizedDescription)")
-                return
-            }
+    private func fetchUsers() async {
+        do {
+            let snapshot = try await Constants.USERS_COLLECTION.getDocuments()
+            let documents = snapshot.documents
             
-            guard let documents = snapshot?.documents else { return }
-            self.users = documents.compactMap({ try? $0.data(as: User.self) })
+            self.users = documents.compactMap { try? $0.data(as: User.self) }.filter { $0.id != Auth.auth().currentUser?.uid }
+        } catch {
+            print("Error when fetching user: \(error.localizedDescription)")
         }
     }
 }
+
+
+
+

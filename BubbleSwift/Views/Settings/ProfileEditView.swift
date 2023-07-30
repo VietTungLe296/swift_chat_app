@@ -1,5 +1,5 @@
 //
-//  EditProfileView.swift
+//  ProfileEditView.swift
 //  BubbleSwift
 //
 //  Created by Le Viet Tung on 27/07/2023.
@@ -8,13 +8,11 @@
 import SwiftUI
 import PhotosUI
 
-struct EditProfileView: View {
-    @State var username: String = ""
+struct ProfileEditView: View {
     @State var showStatusEdit = false
     
     @ObservedObject var imagePicker = ImagePicker()
-    
-    @EnvironmentObject var viewModel : AuthViewModel
+    @EnvironmentObject var authViewModel : AuthViewModel
     
     var body: some View {
         ZStack {
@@ -33,11 +31,27 @@ struct EditProfileView: View {
                                     .clipShape(Circle())
                                 
                             } else {
-                                Image("vts")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 64, height: 64)
-                                    .clipShape(Circle())
+                                if let urlString = authViewModel.currentUser?.profileImageURL, let imageURL = URL(string: urlString) {
+                                    AsyncImage(url: imageURL) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                                .frame(width: 64, height: 64)
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 64, height: 64)
+                                                .clipShape(Circle())
+                                        case .failure(_):
+                                            DefaultThumbnail()
+                                                .frame(width: 64, height: 64)
+                                        @unknown default:
+                                            DefaultThumbnail()
+                                                .frame(width: 64, height: 64)
+                                        }
+                                    }
+                                }
                             }
                             
                             PhotosPicker("Edit", selection: $imagePicker.imageSelection, matching: .images)
@@ -57,8 +71,9 @@ struct EditProfileView: View {
                     Divider()
                         .padding(.horizontal)
                     
-                    TextField("Name", text: $username)
+                    TextField("Name", text: $authViewModel.currentName)
                         .padding(10)
+                        .autocorrectionDisabled()
                 }
                 .background(.white)
                 .padding(.vertical, 5)
@@ -93,7 +108,9 @@ struct EditProfileView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
                     if let avatarImage = imagePicker.image {
-                        viewModel.uploadProfileImage(avatarImage)
+                        Task {
+                            await authViewModel.uploadProfileImage(avatarImage)
+                        }
                     }
                 }
             }
@@ -107,7 +124,8 @@ struct EditProfileView: View {
 struct EditProfileView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            EditProfileView(username: "Viet Tung Le")
+            ProfileEditView()
+                .environmentObject(AuthViewModel())
         }
     }
 }

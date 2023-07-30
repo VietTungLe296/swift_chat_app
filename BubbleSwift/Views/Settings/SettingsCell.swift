@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct SettingsCell: View {
-    let option: SettingsOption
+    private let option: SettingsOption
+    
+    init(option: SettingsOption) {
+        self.option = option
+    }
     
     var body: some View {
         VStack {

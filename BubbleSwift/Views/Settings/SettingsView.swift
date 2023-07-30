@@ -21,7 +21,7 @@ struct SettingsView: View {
                 GeometryReader { geometry in
                     VStack(spacing: 32) {
                         NavigationLink {
-                            EditProfileView()
+                            ProfileEditView()
                         } label: {
                             SettingsHeaderView(user: currentUser)
                         }

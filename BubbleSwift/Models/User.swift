@@ -16,3 +16,7 @@ struct User: Identifiable, Decodable {
     var fullName: String
     var profileImageURL: String
 }
+
+extension User {
+    static let mockUser = User(email: "ladykillah07@gmail.com", username: "VTS", fullName: "Le Viet Tung", profileImageURL: "https://media.cnn.com/api/v1/images/stellar/prod/230621042149-01-cristiano-ronaldo-euro-200-apps-062023-restricted.jpg?c=1x1")
+}

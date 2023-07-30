@@ -37,8 +37,6 @@ struct LoginView: View {
                     CustomTextField(imageName: "envelope", placeholder: "Email", isSecureField: false, text: $email)
                     CustomTextField(imageName: "lock", placeholder: "Password", isSecureField: true, text: $password)
                 }
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
                 .padding([.top, .horizontal], 32)
                 
                 HStack {
@@ -56,7 +54,10 @@ struct LoginView: View {
                 
                 Button {
                     showStatus = true
-                    viewModel.login(email: email, password: password)
+                    
+                    Task {
+                        await viewModel.login(email: email, password: password)
+                    }
                 } label: {
                     Text("Sign In")
                         .font(.headline)

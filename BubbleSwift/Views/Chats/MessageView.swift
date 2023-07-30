@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct MessageView: View {
-    var isFromCurrentUser: Bool
-    var messageText: String
+    @StateObject var viewModel: MessageViewModel
     
     var body: some View {
         HStack {
-            if isFromCurrentUser {
+            if viewModel.isFromCurrentUser {
                 Spacer()
                 
-                Text(messageText)
+                Text(viewModel.message.text)
                     .padding(12)
                     .background(.blue)
                     .font(.system(size: 15))
@@ -27,13 +26,28 @@ struct MessageView: View {
                 
             } else {
                 HStack(alignment: .bottom) {
-                    Image("vts")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 32, height: 32)
-                        .clipShape(Circle())
+                    AsyncImage(url: viewModel.profileImageURL) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                                .scaledToFill()
+                                .frame(width: 32, height: 32)
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 32, height: 32)
+                                .clipShape(Circle())
+                        case .failure(_):
+                            DefaultThumbnail()
+                                .frame(width: 32, height: 32)
+                        @unknown default:
+                            DefaultThumbnail()
+                                .frame(width: 32, height: 32)
+                        }
+                    }
                     
-                    Text(messageText)
+                    Text(viewModel.message.text)
                         .padding(12)
                         .background(Color(.systemGray5))
                         .font(.system(size: 15))
@@ -45,15 +59,6 @@ struct MessageView: View {
                 
                 Spacer()
             }
-        }
-    }
-}
-
-struct MessageView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            MessageView(isFromCurrentUser: false, messageText: "Play for fun")
-            MessageView(isFromCurrentUser: true, messageText: "Play for fun")
         }
     }
 }

@@ -12,9 +12,7 @@ struct DefaultThumbnail: View {
         Image("default.thumbnail")
             .resizable()
             .scaledToFill()
-            .frame(width: 64, height: 64)
             .clipShape(Circle())
-            .padding(.leading)
     }
 }
 
