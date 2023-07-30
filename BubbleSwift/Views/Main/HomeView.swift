@@ -13,8 +13,7 @@ struct HomeView: View {
     private var tabTitle: String {
         switch selectedIndex {
         case 0: return "Chats"
-        case 1: return "Channels"
-        case 2: return "Settings"
+        case 1: return "Settings"
         default: return ""
         }
     }
@@ -28,17 +27,11 @@ struct HomeView: View {
                     }
                     .tag(0)
                 
-                ChannelsView()
-                    .tabItem {
-                        Image(systemName: "person.3.fill")
-                    }
-                    .tag(1)
-                
                 SettingsView()
                     .tabItem {
                         Image(systemName: "gear")
                     }
-                    .tag(2)
+                    .tag(1)
             }
             .navigationTitle(tabTitle)
         }

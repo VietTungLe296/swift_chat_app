@@ -14,16 +14,26 @@ struct NewMessageView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @ObservedObject var userViewModel: UserViewModel = UserViewModel()
+    
+    var filteredUsers: [User] {
+        if searchText.isEmpty {
+            return userViewModel.users
+        } else {
+            return userViewModel.users.filter { $0.username.lowercased().contains(searchText.lowercased()) || $0.fullName.lowercased().contains(searchText.lowercased())}
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
-                    ForEach(0...10, id: \.self) { index in
+                    ForEach(filteredUsers) { user in
                         Button {
                             showChatView = true
                             dismiss()
                         } label: {
-                            UserCell()
+                            UserCell(user: user)
                         }
                     }
                 }

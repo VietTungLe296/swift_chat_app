@@ -13,44 +13,46 @@ struct SettingsView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
-        ZStack {
-            Color(.systemGroupedBackground)
-                .ignoresSafeArea()
-            
-            GeometryReader { geometry in
-                VStack(spacing: 32) {
-                    NavigationLink {
-                        EditProfileView()
-                    } label: {
-                        SettingsHeaderView()
-                    }
-                    
-                    VStack(spacing: 1) {
-                        ForEach(SettingsOption.allCases, id: \.self) { option in
-                            SettingsCell(option: option)
+        if let currentUser = authViewModel.currentUser {
+            ZStack {
+                Color(.systemGroupedBackground)
+                    .ignoresSafeArea()
+                
+                GeometryReader { geometry in
+                    VStack(spacing: 32) {
+                        NavigationLink {
+                            EditProfileView()
+                        } label: {
+                            SettingsHeaderView(user: currentUser)
                         }
+                        
+                        VStack(spacing: 1) {
+                            ForEach(SettingsOption.allCases, id: \.self) { option in
+                                SettingsCell(option: option)
+                            }
+                        }
+                        
+                        Button {
+                            showAlert = true
+                        } label: {
+                            Text("Log Out")
+                                .foregroundColor(.red)
+                                .font(.system(size: 18))
+                                .frame(width: geometry.size.width, height: 50)
+                                .background(.white)
+                        }
+                        .alert(isPresented: $showAlert) {
+                            Alert(title: Text("Confirmation"),
+                                  message: Text("Are you sure you want to log out?"),
+                                  primaryButton: .destructive(Text("Log Out")) {
+                                authViewModel.signOut()
+                            },
+                                  secondaryButton: .cancel()
+                            )
+                        }
+                        
+                        Spacer()
                     }
-                    
-                    Button {
-                        showAlert = true
-                    } label: {
-                        Text("Log Out")
-                            .foregroundColor(.red)
-                            .font(.system(size: 18))
-                            .frame(width: geometry.size.width, height: 50)
-                            .background(.white)
-                    }
-                    .alert(isPresented: $showAlert) {
-                        Alert(title: Text("Confirmation"),
-                              message: Text("Are you sure you want to log out?"),
-                              primaryButton: .destructive(Text("Log Out")) {
-                            authViewModel.signOut()
-                        },
-                              secondaryButton: .cancel()
-                        )
-                    }
-                    
-                    Spacer()
                 }
             }
         }
@@ -62,6 +64,7 @@ struct SettingsView_Previews: PreviewProvider {
         NavigationView {
             SettingsView()
                 .navigationTitle("Settings")
+                .environmentObject(AuthViewModel())
         }
     }
 }

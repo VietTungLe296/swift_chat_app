@@ -17,24 +17,43 @@ enum AuthenticationStatus: Equatable {
 final class AuthViewModel: ObservableObject {
     @Published var isAuthenticated = false
     @Published var status: AuthenticationStatus = .loading
-    @Published var userSession: FirebaseAuth.User?
     @Published var showSuccessAlert: Bool = false
-    
-    private var currentUser: FirebaseAuth.User?
+    @Published var userSession: FirebaseAuth.User?
+    @Published var currentUser: User?
     
     init() {
         userSession = Auth.auth().currentUser
+        fetchUser()
+    }
+    
+    func fetchUser() {
+        guard let uid = userSession?.uid else {
+            return
+        }
+        
+        Constants.USERS_COLLECTION.document(uid).getDocument { snapshot, error in
+            if let error {
+                print("Error when fetching user: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let user = try? snapshot?.data(as: User.self) else {
+                return
+            }
+            self.currentUser = user
+        }
     }
     
     func login(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            if let error {
+            if let error = error {
                 self.status = .error(message: "Failed to sign in: \(error.localizedDescription)")
                 return
             }
             
-            self.status = .ok
             self.userSession = result?.user
+            self.status = .ok
+            self.fetchUser()
         }
     }
     
@@ -46,13 +65,13 @@ final class AuthViewModel: ObservableObject {
             }
             
             guard let user = result?.user else {
-                self.status = .error(message: "User is nil")
+                self.status = .error(message: "Cannot find user")
                 return
             }
             
-            let data: [String: Any] = ["email": email, "username": username, "fullName": fullName]
+            let data: [String: Any] = ["email": email, "username": username, "fullName": fullName, "profileImageURL": Constants.PROFILE_DEFAULT_THUMBNAIL]
             
-            Firestore.firestore().collection("users").document(user.uid).setData(data) { error in
+            Constants.USERS_COLLECTION.document(user.uid).setData(data) { error in
                 if let error {
                     self.status = .error(message: "Failed to update user: \(error.localizedDescription)")
                     return
@@ -65,15 +84,18 @@ final class AuthViewModel: ObservableObject {
     }
     
     func uploadProfileImage(_ image: UIImage) {
-        guard let uid = currentUser?.uid else { return }
+        guard let uid = userSession?.uid else {
+            return
+        }
         
         ImageUploader.uploadImage(image: image) { imageURL in
-            Firestore.firestore().collection("users").document(uid).updateData(["profileURL": imageURL])
+            Constants.USERS_COLLECTION.document(uid).updateData(["profileURL": imageURL])
         }
     }
     
     func signOut() {
         self.userSession = nil
+        self.currentUser = nil
         try? Auth.auth().signOut()
     }
 }
