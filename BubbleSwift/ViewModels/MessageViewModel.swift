@@ -8,10 +8,11 @@
 import Foundation
 import Firebase
 
-final class MessageViewModel: ObservableObject{
+@MainActor
+final class MessageViewModel: ObservableObject {
     let message: Message
     
-    init(message: Message) {
+    init(_ message: Message) {
         self.message = message
     }
     

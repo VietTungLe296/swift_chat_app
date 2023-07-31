@@ -54,9 +54,15 @@ final class ChatViewModel: ObservableObject {
         let messageId = senderRef.documentID
         let receiverRef = Constants.MESSAGES_COLLECTION.document(receiverId).collection(senderId)
         
+        let recentSenderRef = Constants.MESSAGES_COLLECTION.document(senderId).collection("recent_messages").document(receiverId)
+        let recentReceiverRef = Constants.MESSAGES_COLLECTION.document(receiverId).collection("recent_messages").document(senderId)
+        
         let data: [String: Any] = ["text": message, "senderId": senderId, "receiverId": receiverId, "read": false, "timestamp": Timestamp(date: Date())]
         
         senderRef.setData(data)
         receiverRef.document(messageId).setData(data)
+        
+        recentSenderRef.setData(data)
+        recentReceiverRef.setData(data)
     }
 }

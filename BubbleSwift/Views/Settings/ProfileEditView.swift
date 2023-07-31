@@ -51,6 +51,9 @@ struct ProfileEditView: View {
                                                 .frame(width: 64, height: 64)
                                         }
                                     }
+                                } else {
+                                    DefaultThumbnail()
+                                        .frame(width: 64, height: 64)
                                 }
                             }
                             

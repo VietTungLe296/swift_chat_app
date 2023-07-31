@@ -12,16 +12,14 @@ struct ConversationView: View {
     @State private var showChatView = false
     @State var selectedUser: User?
     
+    @ObservedObject var viewModel = ConversationViewModel()
+    
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             ScrollView {
                 VStack(alignment: .leading) {
-                    ForEach(0...10, id: \.self) { _ in
-                        NavigationLink {
-                            ChatView(user: User.mockUser)
-                        } label: {
-                            ConversationCell()
-                        }
+                    ForEach(viewModel.recentMessages) { message in
+                        ConversationCell(viewModel: ConversationCellViewModel(message))
                     }
                 }
             }
@@ -52,6 +50,9 @@ struct ConversationView: View {
             if let user = selectedUser {
                 ChatView(user: user)
             }
+        }
+        .onAppear {
+            viewModel.fetchRecentMessages()
         }
     }
 }

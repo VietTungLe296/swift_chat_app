@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C0E58252A77D43A004085DC /* ConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0E58242A77D43A004085DC /* ConversationViewModel.swift */; };
+		6C0E58272A77DD81004085DC /* ConversationCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0E58262A77DD81004085DC /* ConversationCellViewModel.swift */; };
 		6C146FC62A75EC7D00B35E48 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C146FC52A75EC7D00B35E48 /* User.swift */; };
 		6C146FC92A75EE9800B35E48 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6C146FC82A75EE9800B35E48 /* FirebaseAuth */; };
 		6C146FCB2A75EE9800B35E48 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6C146FCA2A75EE9800B35E48 /* FirebaseFirestore */; };
@@ -49,6 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6C0E58242A77D43A004085DC /* ConversationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewModel.swift; sourceTree = "<group>"; };
+		6C0E58262A77DD81004085DC /* ConversationCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellViewModel.swift; sourceTree = "<group>"; };
 		6C146FC52A75EC7D00B35E48 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6C146FD22A7604A500B35E48 /* DefaultThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultThumbnail.swift; sourceTree = "<group>"; };
 		6C146FD62A7606D700B35E48 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 				6C7CD7A12A74F19400E80504 /* AuthViewModel.swift */,
 				6C146FD82A762E8600B35E48 /* UserViewModel.swift */,
 				6C146FDA2A76A07800B35E48 /* MessageViewModel.swift */,
+				6C0E58242A77D43A004085DC /* ConversationViewModel.swift */,
+				6C0E58262A77DD81004085DC /* ConversationCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -330,6 +336,7 @@
 			files = (
 				6CE8C54D2A725C78004C8FBC /* ConversationView.swift in Sources */,
 				6C7CD78F2A74BC8F00E80504 /* Message.swift in Sources */,
+				6C0E58272A77DD81004085DC /* ConversationCellViewModel.swift in Sources */,
 				6C146FD92A762E8600B35E48 /* UserViewModel.swift in Sources */,
 				6CE8C54F2A725DB4004C8FBC /* SettingsView.swift in Sources */,
 				6C7CD7A82A750ADB00E80504 /* ImagePicker.swift in Sources */,
@@ -357,6 +364,7 @@
 				6CA0F3FD2A7151F7002D6EFB /* BubbleSwiftApp.swift in Sources */,
 				6CA0F4142A716473002D6EFB /* CustomTextField.swift in Sources */,
 				6CE8C5452A725215004C8FBC /* HomeView.swift in Sources */,
+				6C0E58252A77D43A004085DC /* ConversationViewModel.swift in Sources */,
 				6C146FD32A7604A500B35E48 /* DefaultThumbnail.swift in Sources */,
 				6CA0F4162A721E5C002D6EFB /* RegistrationView.swift in Sources */,
 			);
@@ -422,6 +430,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -475,6 +484,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

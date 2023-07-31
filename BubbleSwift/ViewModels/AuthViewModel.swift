@@ -36,7 +36,9 @@ final class AuthViewModel: ObservableObject {
         
         do {
             let snapshot = try await Constants.USERS_COLLECTION.document(uid).getDocument()
+            
             guard let user = try? snapshot.data(as: User.self) else { return }
+            
             self.currentUser = user
         } catch {
             print("Error when fetching user: \(error.localizedDescription)")
